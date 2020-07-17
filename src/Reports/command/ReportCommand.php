@@ -18,7 +18,7 @@ class ReportCommand extends Command {
     private $plugin;
 
     /** @var int[] */
-    private $reportsCooldown = [];
+    private $cooldowns = [];
 
     /**
      * ReportCommand constructor.
@@ -39,30 +39,32 @@ class ReportCommand extends Command {
             $sender->sendMessage(TF::RED ."Usage: " . $this->getUsage());
             return;
         }
+
         $server = $this->plugin->getServer();
         $player = $server->getPlayer(array_shift($args));
 
         if($player == null) {
-            $sender->sendMessage("This player is not online!");
-            return;
-        }
-        $name = $player->getName();
-        $cooldown = $this->reportsCooldown[$name];
-
-        if(isset($cooldown) and time() - $cooldown < self::REPORT_COOLDOWN) {
-            $sender->sendMessage(TF::RED . "You can't send multiple reports at once!");
+            $sender->sendMessage(TF::RED . "This player is not online!");
             return;
         }
 
-        $sender->sendMessage("Your report has been sent.");
-        $this->reportsCooldown[$name] = time();
+        $username = $player->getName();
+
+        if(isset($this->cooldowns[$username])) {
+            $cooldown = $this->cooldowns[$username];
+            if(isset($cooldown) and time() - $cooldown < self::REPORT_COOLDOWN) {
+                $sender->sendMessage(TF::RED . "You cannot send multiple reports at once!");
+                return;
+            }
+        }
+
+        $sender->sendMessage(TF::GREEN . "The report has been sent.");
+        $this->cooldowns[$username] = time();
 
         foreach($server->getOnlinePlayers() as $onlinePlayer) {
-            if(!$player->hasPermission("reports.logs")) {
-                continue;
+            if($player->hasPermission("reports.logs")) {
+                $this->announceReport($onlinePlayer, $sender, $player, implode(" ", $args));
             }
-
-            $this->announceReport($onlinePlayer, $sender, $player, implode(" ", $args));
         }
     }
 
