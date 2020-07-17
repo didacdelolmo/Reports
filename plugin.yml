@@ -1,7 +1,7 @@
-main: Reports\Reports
-name: Reports
-author: Didah
+main: diduhless\reports\Reports
+name: diduhless
+author: Didah (Diduhless)
 description: A reports plugin for PMMP servers
 website: twitter.com/Diduhless
 version: "1.0.0"
-api: [3.0.0]
+api: 3.0.0

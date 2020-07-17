@@ -1,18 +1,15 @@
 <?php
 
 
-namespace Reports\command;
+namespace diduhless\reports;
 
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
-use Reports\Reports;
 
 class ReportCommand extends Command {
-
-    private const REPORT_COOLDOWN = 20;
 
     /** @var Reports */
     private $plugin;
@@ -52,7 +49,7 @@ class ReportCommand extends Command {
 
         if(isset($this->cooldowns[$username])) {
             $cooldown = $this->cooldowns[$username];
-            if(isset($cooldown) and time() - $cooldown < self::REPORT_COOLDOWN) {
+            if(isset($cooldown) and time() - $cooldown < Reports::getInstance()->getConfig()->get("report-cooldown")) {
                 $sender->sendMessage(TF::RED . "You cannot send multiple reports at once!");
                 return;
             }
@@ -71,13 +68,13 @@ class ReportCommand extends Command {
     /**
      * @param Player $admin
      * @param CommandSender $sender
-     * @param Player $player
+     * @param Player $target
      * @param string $reason
      */
-    private function announceReport(Player $admin, CommandSender $sender, Player $player, string $reason): void {
+    private function announceReport(Player $admin, CommandSender $sender, Player $target, string $reason): void {
         $admin->sendMessage(TF::DARK_GRAY . "***************");
         $admin->sendMessage(TF::DARK_PURPLE . "NEW REPORT");
-        $admin->sendMessage(TF::DARK_AQUA . "Reported player: " . TF::GRAY . $player->getName());
+        $admin->sendMessage(TF::DARK_AQUA . "Reported player: " . TF::GRAY . $target->getName());
         $admin->sendMessage(TF::DARK_AQUA . "Reported by: " . TF::GRAY . $sender->getName());
         $admin->sendMessage(TF::DARK_AQUA . "Reason: " . TF::GRAY . $reason);
         $admin->sendMessage(TF::DARK_GRAY . "***************");

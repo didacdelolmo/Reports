@@ -1,0 +1,2 @@
+# Players will have to wait this amount of seconds to send another report
+report-cooldown: 20
