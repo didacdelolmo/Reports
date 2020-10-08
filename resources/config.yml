@@ -2,5 +2,5 @@
 report-cooldown: 20
 
 # https://github.com/CortexPE/DiscordWebhookAPI virion is required to enable webhooks
-enable-webhook: true
+enable-webhook: false
 webhook-url: ""
