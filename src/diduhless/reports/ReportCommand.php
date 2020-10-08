@@ -4,6 +4,9 @@
 namespace diduhless\reports;
 
 
+use CortexPE\DiscordWebhookAPI\Embed;
+use CortexPE\DiscordWebhookAPI\Message;
+use CortexPE\DiscordWebhookAPI\Webhook;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -32,7 +35,7 @@ class ReportCommand extends Command {
      * @param array $args
      */
     public function execute(CommandSender $sender, string $commandLabel, array $args): void {
-        if(!isset($args[0]) or !isset($args[1])) {
+        if(!isset($args[1])) {
             $sender->sendMessage(TF::RED ."Usage: " . $this->getUsage());
             return;
         }
@@ -40,7 +43,7 @@ class ReportCommand extends Command {
         $server = $this->plugin->getServer();
         $player = $server->getPlayer(array_shift($args));
 
-        if($player == null) {
+        if($player === null) {
             $sender->sendMessage(TF::RED . "This player is not online!");
             return;
         }
@@ -58,11 +61,14 @@ class ReportCommand extends Command {
         $sender->sendMessage(TF::GREEN . "The report has been sent.");
         $this->cooldowns[$username] = time();
 
-        foreach($server->getOnlinePlayers() as $onlinePlayer) {
+        $reason = implode(" ", $args);
+        foreach($server->getOnlinePlayers() as $online_player) {
             if($player->hasPermission("reports.logs")) {
-                $this->announceReport($onlinePlayer, $sender, $player, implode(" ", $args));
+                $this->announceReport($online_player, $sender, $player, $reason);
             }
         }
+
+        $this->sendWebhook($sender, $player, $reason);
     }
 
     /**
@@ -78,6 +84,25 @@ class ReportCommand extends Command {
         $admin->sendMessage(TF::DARK_AQUA . "Reported by: " . TF::GRAY . $sender->getName());
         $admin->sendMessage(TF::DARK_AQUA . "Reason: " . TF::GRAY . $reason);
         $admin->sendMessage(TF::DARK_GRAY . "***************");
+    }
+
+    public function sendWebhook(CommandSender $sender, Player $target, string $reason): void {
+        $config = $this->plugin->getConfig();
+        if(!$config->get("enable-webhook")) return;
+
+        $embed = new Embed();
+        $embed->setColor(16574595); // Yellow
+        $embed->setTitle("A new report has been sent!");
+        $embed->addField("Reported player", $target->getName());
+        $embed->addField("Reported by", $sender->getName());
+        $embed->addField("Reason", $reason);
+        $embed->setFooter("Developed by Didah#4145");
+
+        $message = new Message();
+        $message->addEmbed($embed);
+
+        $webhook = new Webhook($config->get("webhook-url"));
+        $webhook->send($message);
     }
 
 }

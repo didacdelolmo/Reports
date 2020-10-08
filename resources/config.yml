@@ -1,2 +1,6 @@
 # Players will have to wait this amount of seconds to send another report
 report-cooldown: 20
+
+# https://github.com/CortexPE/DiscordWebhookAPI virion is required to enable webhooks
+enable-webhook: true
+webhook-url: ""
