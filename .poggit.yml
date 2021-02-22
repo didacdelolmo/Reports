@@ -1,8 +1,12 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Diduhless/Reports
 build-by-default: true
-branches:
-- master
 projects:
   Reports:
     path: ""
+    icon: "icon.png"
+    libs:
+      - src: GiantQuartz/EasyUI/libEasyUI
+        version: 1.0.0
+      - src: CortexPE/DiscordWebhookAPI/DiscordWebhookAPI
+          version: 1.0.1
 ...
