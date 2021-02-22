@@ -1,6 +1,15 @@
 # Players will have to wait this amount of seconds to send another report
-report-cooldown: 20
+report.cooldown: 20
 
-# https://github.com/CortexPE/DiscordWebhookAPI virion is required to enable webhooks
-enable-webhook: false
-webhook-url: ""
+# Players with this permission will be able to see reported players in-game
+report.permission: "reports.admin"
+
+# These reasons will be shown on the /report form
+report.reasons:
+  - "Cheating"
+  - "Advertising"
+  - "Spamming"
+  - "Other"
+
+webhook.enable: false
+webhook.url: ""

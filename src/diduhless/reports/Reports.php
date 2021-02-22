@@ -4,12 +4,12 @@
 namespace diduhless\reports;
 
 
+use diduhless\reports\session\SessionListener;
 use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat as TF;
 
 class Reports extends PluginBase {
 
-    /** @var Reports */
+    /** @var self */
     static private $instance;
 
     public function onLoad() {
@@ -18,14 +18,13 @@ class Reports extends PluginBase {
     }
 
     public function onEnable() {
-        $this->getServer()->getCommandMap()->register("reports", new ReportCommand($this));
-        $this->getLogger()->info(
-            TF::DARK_GRAY . "[" . TF::DARK_AQUA . "Reports by @Diduhless" . TF::DARK_GRAY . "] " .
-            TF::GOLD . "Reports has been enabled. Updates are released on https://github.com/Diduhless/diduhless/releases"
-        );
+        $server = $this->getServer();
+        $server->getPluginManager()->registerEvents(new SessionListener(), $this);
+        $server->getCommandMap()->register("reports", new ReportCommand());
+
     }
 
-    public static function getInstance(): Reports {
+    static public function getInstance(): self {
         return self::$instance;
     }
 

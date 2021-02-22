@@ -1,7 +1,7 @@
 main: diduhless\reports\Reports
 name: Reports
-author: Didah (Diduhless)
-description: A reports plugin for PMMP servers
-website: twitter.com/Diduhless
+description: 📢 A reports plugin for pocketmine servers
+author: Didah (@Diduhless)
+website: https://github.com/Diduhless
 version: "1.0.0"
 api: 3.0.0
