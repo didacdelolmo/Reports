@@ -1,9 +1,4 @@
 <?php
-/*
- * Copyright (C) Diduhless - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- */
 
 declare(strict_types=1);
 
@@ -67,7 +62,7 @@ class Report {
             }
 
             $session = SessionFactory::getSession($player);
-            $session->message("{BOLD}{RED}[!] {RESET}{YELLOW}$target {RED}has been reported by {YELLOW}$sender {RED}for {YELLOW}$reason {RED}!");
+            $session->message("{BOLD}{RED}[!] {RESET}{YELLOW}$target {RED}has been reported by {YELLOW}$sender {RED}for {YELLOW}$reason{RED}!");
         }
         $this->target->addReportCount();
 
