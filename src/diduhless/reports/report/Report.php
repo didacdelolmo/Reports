@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 
-namespace diduhless\reports;
+namespace diduhless\reports\report;
 
 
 use CortexPE\DiscordWebhookAPI\Embed;
 use CortexPE\DiscordWebhookAPI\Message;
 use CortexPE\DiscordWebhookAPI\Webhook;
+use diduhless\reports\Reports;
 use diduhless\reports\session\Session;
 use diduhless\reports\session\SessionFactory;
 use pocketmine\Server;
