@@ -8,10 +8,10 @@ namespace diduhless\reports\report\form;
 
 use diduhless\reports\ColorUtils;
 use diduhless\reports\report\Report;
-use diduhless\reports\report\ReportFactory;
 use EasyUI\element\Button;
 use EasyUI\variant\SimpleForm;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 class ReportOptionsForm extends SimpleForm {
 
@@ -31,6 +31,7 @@ class ReportOptionsForm extends SimpleForm {
     public function onCreation(): void {
         $this->addSpectateButton();
         $this->addDismissButton();
+        $this->addGobackButton();
     }
 
     private function addSpectateButton(): void {
@@ -43,11 +44,18 @@ class ReportOptionsForm extends SimpleForm {
     }
 
     private function addDismissButton(): void {
-        $button = new Button("Dismiss");
+        $button = new Button(TextFormat::RED . "Dismiss");
         $button->setSubmitListener(function(Player $player) {
-            ReportFactory::dismissReport($this->report->getTarget()->getUsername());
+            $this->report->dismiss($player);
         });
         $this->addButton($button);
+    }
+
+    private function addGobackButton(): void {
+        $button = new Button("Go back");
+        $button->setSubmitListener(function(Player $player) {
+            $player->sendForm(new ReportListForm());
+        });
     }
 
 }

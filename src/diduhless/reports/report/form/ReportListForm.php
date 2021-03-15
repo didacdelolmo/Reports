@@ -24,9 +24,11 @@ class ReportListForm extends SimpleForm {
             $target = $report->getTarget();
             $target_name = $target->getUsername();
 
-            $button = new Button(TextFormat::AQUA . $target_name . TextFormat::GRAY . "-" . TextFormat::YELLOW . $report->getReason());
+            $button = new Button(
+                TextFormat::RED . $target_name . TextFormat::EOL .
+                TextFormat::RESET . TextFormat::BOLD . $report->getReason()
+            );
             $button->setSubmitListener(function(Player $player) use ($report, $target, $target_name) {
-
                 if(!$target->getPlayer()->isOnline()) {
                     $session = SessionFactory::getSession($player);
                     $session->message("{RED}The player {WHITE}$target_name {RED}is not online!");
@@ -34,7 +36,6 @@ class ReportListForm extends SimpleForm {
                     $player->sendForm(new ReportOptionsForm($report));
                 }
             });
-
             $this->addButton($button);
         }
     }
