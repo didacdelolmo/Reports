@@ -3,9 +3,12 @@
 declare(strict_types=1);
 
 
-namespace diduhless\reports;
+namespace diduhless\reports\report\form;
 
 
+use diduhless\reports\report\Report;
+use diduhless\reports\report\ReportFactory;
+use diduhless\reports\Reports;
 use diduhless\reports\session\SessionFactory;
 use EasyUI\element\Dropdown;
 use EasyUI\element\Option;
@@ -49,6 +52,8 @@ class ReportForm extends CustomForm {
 
         $report = new Report($sender_session, $target_session, $reason);
         $report->send();
+
+        ReportFactory::registerReport($report);
     }
 
 }

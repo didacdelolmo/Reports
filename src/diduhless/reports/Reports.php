@@ -6,28 +6,37 @@ declare(strict_types=1);
 namespace diduhless\reports;
 
 
+use diduhless\reports\command\ReportCommand;
+use diduhless\reports\command\ReportListCommand;
+use diduhless\reports\report\ReportListener;
 use diduhless\reports\session\SessionListener;
+use pocketmine\command\Command;
+use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\SingletonTrait;
 
 class Reports extends PluginBase {
-
-    /** @var self */
-    static private $instance;
+    use SingletonTrait;
 
     public function onLoad() {
-        self::$instance = $this;
+        self::setInstance($this);
         $this->saveDefaultConfig();
     }
 
     public function onEnable() {
-        $server = $this->getServer();
-        $server->getPluginManager()->registerEvents(new SessionListener(), $this);
-        $server->getCommandMap()->register("reports", new ReportCommand());
+        $this->registerEvents(new SessionListener());
+        $this->registerEvents(new ReportListener());
 
+        $this->registerCommand(new ReportCommand());
+        $this->registerCommand(new ReportListCommand());
     }
 
-    static public function getInstance(): self {
-        return self::$instance;
+    private function registerEvents(Listener $listener): void {
+        $this->getServer()->getPluginManager()->registerEvents($listener, $this);
+    }
+
+    private function registerCommand(Command $command): void {
+        $this->getServer()->getCommandMap()->register("reports", $command);
     }
 
 }
