@@ -8,18 +8,13 @@ namespace diduhless\reports\session;
 
 use diduhless\reports\Reports;
 use diduhless\reports\ColorUtils;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class Session {
 
-    /** @var Player */
-    private $player;
-
-    /** @var int */
-    private $reports_count = 0;
-
-    /** @var int */
-    private $last_report_time = 0;
+    private Player $player;
+    private int $reports_count = 0;
+    private int $last_report_time = 0;
 
     public function __construct(Player $player) {
         $this->player = $player;
@@ -42,7 +37,7 @@ class Session {
     }
 
     public function canReport(): bool {
-        if(time() - $this->last_report_time > Reports::getInstance()->getConfig()->get("report.cooldown")) {
+        if(time() - $this->last_report_time >= Reports::getInstance()->getConfig()->get("report.cooldown")) {
             $this->last_report_time = time();
             return true;
         }

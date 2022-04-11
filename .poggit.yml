@@ -5,8 +5,8 @@ projects:
     path: ""
     icon: "icon.png"
     libs:
-      - src: GiantQuartz/EasyUI/libEasyUI
-        version: 1.0.0
+      - src: andresbytes/EasyUI/libEasyUI
+        version: 1.0.2
       - src: CortexPE/DiscordWebhookAPI/DiscordWebhookAPI
         version: 1.0.1
 ...

@@ -10,7 +10,7 @@ use diduhless\reports\report\ReportFactory;
 use diduhless\reports\session\SessionFactory;
 use EasyUI\element\Button;
 use EasyUI\variant\SimpleForm;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
 class ReportListForm extends SimpleForm {

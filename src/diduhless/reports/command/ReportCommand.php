@@ -7,7 +7,7 @@ namespace diduhless\reports\command;
 
 
 use diduhless\reports\report\form\ReportForm;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class ReportCommand extends PlayerCommand {
 
@@ -15,7 +15,7 @@ class ReportCommand extends PlayerCommand {
         parent::__construct("report", "Reports a player");
     }
 
-    public function onCommand(Player $player, array $args) {
+    public function onCommand(Player $player, array $args): void {
         $player->sendForm(new ReportForm());
     }
 

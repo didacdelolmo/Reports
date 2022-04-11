@@ -12,19 +12,14 @@ use CortexPE\DiscordWebhookAPI\Webhook;
 use diduhless\reports\Reports;
 use diduhless\reports\session\Session;
 use diduhless\reports\session\SessionFactory;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 
 class Report {
 
-    /** @var Session */
-    private $sender;
-
-    /** @var Session */
-    private $target;
-
-    /** @var string */
-    private $reason;
+    private Session $sender;
+    private Session $target;
+    private string $reason;
 
     public function __construct(Session $sender, Session $target, string $reason) {
         $this->sender = $sender;

@@ -9,7 +9,7 @@ namespace diduhless\reports\report;
 class ReportFactory {
 
     /** @var Report[] */
-    static private $reports = [];
+    static private array $reports = [];
 
     /**
      * @return Report[]

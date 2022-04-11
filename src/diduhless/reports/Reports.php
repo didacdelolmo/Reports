@@ -18,12 +18,12 @@ use pocketmine\utils\SingletonTrait;
 class Reports extends PluginBase {
     use SingletonTrait;
 
-    public function onLoad() {
+    protected function onLoad(): void {
         self::setInstance($this);
         $this->saveDefaultConfig();
     }
 
-    public function onEnable() {
+    protected function onEnable(): void {
         $this->registerEvents(new SessionListener());
         $this->registerEvents(new ReportListener());
 
