@@ -13,6 +13,7 @@ use pocketmine\player\Player;
 class Session {
 
     private Player $player;
+
     private int $reports_count = 0;
     private int $last_report_time = 0;
 
