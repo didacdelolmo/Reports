@@ -10,13 +10,13 @@ use diduhless\reports\ColorUtils;
 use diduhless\reports\report\Report;
 use EasyUI\element\Button;
 use EasyUI\variant\SimpleForm;
-use pocketmine\Player;
+use pocketmine\player\GameMode;
+use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 
 class ReportOptionsForm extends SimpleForm {
 
-    /** @var Report */
-    private $report;
+    private Report $report;
 
     public function __construct(Report $report) {
         $this->report = $report;
@@ -37,8 +37,8 @@ class ReportOptionsForm extends SimpleForm {
     private function addSpectateButton(): void {
         $button = new Button("Spectate");
         $button->setSubmitListener(function(Player $player) {
-            $player->setGamemode(Player::SPECTATOR);
-            $player->teleport($this->report->getTarget()->getPlayer());
+            $player->setGamemode(GameMode::SPECTATOR());
+            $player->teleport($this->report->getTarget()->getPlayer()->getPosition());
         });
         $this->addButton($button);
     }

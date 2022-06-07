@@ -14,7 +14,7 @@ use EasyUI\element\Dropdown;
 use EasyUI\element\Option;
 use EasyUI\utils\FormResponse;
 use EasyUI\variant\CustomForm;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 
 class ReportForm extends CustomForm {
